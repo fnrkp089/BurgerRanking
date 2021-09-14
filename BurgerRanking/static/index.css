@@ -1,0 +1,149 @@
+@charset "utf-8";
+
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+li {list-style: none;}
+
+body {
+}
+
+button {
+    background: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.clearfix::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+/*--------------------------------------*/
+
+/* header */
+.title{
+    display: block;
+    padding: 32px 0;
+
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* nav */
+
+nav {
+    padding: 32px 0;
+    text-align: center;
+}
+
+.nav_menu{
+    display: inline-block;
+}
+.nav_menu .on{
+    background-color: #888888;
+    color: #ffffff;
+}
+
+.nav_btn{
+    border: 2px solid #888888;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+/* main */
+
+.burgers{
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.burger_wrap{
+    display: grid;
+    grid-template-columns: 1fr 12fr 3fr;
+    margin: 60px 0;
+}
+.burger_rank{
+    font-size: 28px;
+    text-align: center;
+}
+.burger_rank i {
+    border-bottom: 2px solid #888888;
+}
+
+.burger_img{
+    box-sizing: border-box;
+    width: 35%;
+    float: left;
+}
+.burger_img img{
+    width: 100%;
+}
+.sub_wrap{
+    box-sizing: border-box;
+    padding: 16px;
+    width: 65%;
+    float: left;
+}
+.burger_brand, .burger_name, .burger_sub{
+    margin: 10px 0;
+}
+.review_write{
+    text-align: center;
+    width: 100%;
+    float: left;
+}
+.review_btn{
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #666666;
+    color: #ffffff;
+}
+.review_wrap{
+    display: none;
+    text-align: left;
+    padding: 20px;
+}
+.review{
+    font-size: 16px;
+    font-weight: bold;
+}
+.review_list_wrap{
+    padding: 10px 20px;
+}
+.review_list{
+    padding: 8px 0;
+    list-style: disc;
+}
+.review_text{
+    width: 95%;
+    border: 1px solid #444444;
+    border-radius: 10px;
+    padding: 10px;
+}
+.review_complete{
+    padding: 10px 20px;
+    margin: 20px 0;
+    background-color: #666666;
+    color: #ffffff;
+}
+
+.like_wrap{
+    text-align: center;
+}
+.like, .dislike{
+    display: inline-block;
+    font-size: 14px;
+    border: 1px solid #888888;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
