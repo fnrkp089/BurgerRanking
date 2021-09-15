@@ -66,8 +66,8 @@
                                                             <button onclick="reviewBtn(${num},${burgerId})" class="review_btn" id="review_btn_box${num}">리뷰 보기</button>
                                                             <div class="review_wrap" id="review_box${num}">
                                                                 <p class="review">REVIEW</p>
-                                                                <ul class="review_list_wrap${burgerId}">
-                                                                    ##
+                                                                <ul class="review_list_wrap" id="review_list_box${burgerId}">
+
                                                                 </ul>
                                                                 <textarea class="review_text" id="review_comment${num}" cols="30" rows="5" placeholder="리뷰를 입력하세요"></textarea>
                                                                 <button onclick="comment(${num}, ${burgerId})" class="review_complete" id="review_complete_btn">리뷰 등록</button>
@@ -95,12 +95,12 @@
                             let commentList = response['commentList']
                             console.log(commentList);
                             for(let i=0; i<commentList.length ; i++) {
-                                let burgerid = commentList[i].burgerId
+                                let burgerid = commentList[i].burger_id
                                 let comment = commentList[i].comment
-                                console.log(comment)
+                                console.log(burgerid, comment)
                                 let temp_html =
                                     ` <li class="review_list">${comment}</li>`
-                                 $('#review_list_wrap'+burgerid).append(temp_html);
+                                 $('#review_list_box'+burgerid).append(temp_html);
                             }
                         }
                     }
