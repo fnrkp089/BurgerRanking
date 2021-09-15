@@ -15,13 +15,24 @@ def burgers_list():
     burgers = list(db.hamburger.find({},{'_id':False}).sort('like', -1))
     return jsonify({'result':'success', 'all_burgers': burgers})
 
+#리뷰 불러오기
+@app.route('/get_comment', methods=['GET'])
+def comment_list():
+    burgerid = request.args.get('burgerComment')
+    print(burgerid)
+    comment = list(db.review.find({'burger_id': burgerid} , {'_id':False}))
+    return jsonify({'result': 'success', 'commentList': comment})
 
 # 리뷰작성
 @app.route('/comment', methods=['POST'])
 def burgers_review():
     comment_receive = request.form['comment_give']
-
-    db.hamburger.insert_one(comment_receive)
+    burgerId = request.form['burgerId']
+    doc = {
+        'burger_id': burgerId,
+        'comment': comment_receive
+    }
+    db.review.insert_one(doc)
 
     return jsonify({'result':'success'})
 
