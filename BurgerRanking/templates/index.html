@@ -8,7 +8,7 @@
         <title>Document</title>
 
         <!--CSS-->
-        <link rel="stylesheet" href="../static/index.css">
+        <link rel="stylesheet" href="/static/index.css">
 
         <!--JS-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -33,7 +33,7 @@
             }
 
             // API
-            let brandName;
+            let brandName  ;
             let user_info = '{{user_info}}'
             console.log(user_info)
             $(document).ready(function () {
@@ -41,8 +41,9 @@
             });
 
             function showBurgers(string) {
+                if(String !== undefined)
+                    brandName = string
                 $('#burgers_box').empty();
-
                 $.ajax({
                     type: 'GET',
                     url: '/mainpage',
@@ -124,7 +125,6 @@
            function comment(Num, BurgerId) {
                 let burgerId = BurgerId;
                 let review = $('#review_comment'+Num).val();
-
                 $.ajax({
                     type: 'POST',
                     url: '/comment',
@@ -132,7 +132,7 @@
                     success: function (response) {
                         if (response['result'] == 'success') {
                             alert('리뷰작성 완료');
-                            window.location.reload();
+                           showBurgers(brandName);
                         }
                     }
                 });
@@ -147,7 +147,7 @@
                     success: function (response) {
                         if (response['result'] == 'success') {
                             alert('좋아요 완료');
-                            window.location.reload();
+                           showBurgers(brandName);
                         }
                     }
                 });
@@ -173,7 +173,7 @@
         <nav>
             <ol>
                 <li class="nav_menu">
-                    <button class="nav_btn on" onclick="showBurgers()">ALL</button>
+                    <button class="nav_btn on" onclick="window.location.reload()">ALL</button>
                 </li>
                 <li class="nav_menu">
                     <button class="nav_btn" onclick="showBurgers('mac')">McDonald</button>
