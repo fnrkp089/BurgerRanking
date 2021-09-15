@@ -139,11 +139,16 @@ nav {
 .like_wrap{
     text-align: center;
 }
-.like, .dislike{
+.like{
     display: inline-block;
     font-size: 14px;
-    border: 1px solid #888888;
-    border-radius: 10px;
-    padding: 10px 20px;
-    margin-top: 20px;
+    border: 2px solid #888888;
+    border-radius: 10%;
+    padding: 18px;
+    margin-top: 30px;
+}
+.like span{
+    display: block;
+    padding-top: 8px;
+    font-size: 18px;
 }

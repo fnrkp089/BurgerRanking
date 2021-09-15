@@ -76,7 +76,6 @@
                                                     </div>
                                                     <div class="like_wrap">
                                                         <a href="#" onclick="like('${name}')" class="like">좋아요 <span><b>${like}</b></span></a>
-                                                        <a href="#" onclick="dislike('${name}')" class="dislike">싫어요 <span><b>${dislike}</b></span></a>
                                                     </div>
                                                 </div>`
                                 $('#burgers_box').append(temp_html);
@@ -118,20 +117,6 @@
                 });
             }
 
-            // 싫어요
-            function dislike(name) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/dislike',
-                    data: {'name_give':name},
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            alert('싫어요 완료');
-                            window.location.reload();
-                        }
-                    }
-                });
-            }
         </script>
     </head>
     <body>
@@ -179,7 +164,6 @@
 <!--                </div>-->
 <!--                <div class="like_wrap">-->
 <!--                    <button type="button" class="like">좋아요 <span><b>10</b></span></button>-->
-<!--                    <button type="button" class="dislike">싫어요 <span><b>2</b></span></button>-->
 <!--                </div>-->
 <!--            </div>-->
         </div>

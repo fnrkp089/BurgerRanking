@@ -4,7 +4,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 
 client = MongoClient('localhost', 27017)
-db = client.project
+db = client.burger_list
 
 @app.route('/')
 def home():
@@ -35,15 +35,6 @@ def burgers_like():
     db.hamburger.update_one({'name':name_receive}, {'$set':{'like': new_like}})
     return jsonify({'result':'success'})
 
-# 싫어요
-@app.route('/dislike', methods=['POST'])
-def burgers_dislike():
-    name_receive = request.form['name_give']
-    dislike = db.hamburger.find_one({'name': name_receive})
-    new_dislike = dislike['dislike'] + 1
-
-    db.hamburger.update_one({'name': name_receive}, {'$set': {'dislike': new_dislike}})
-    return jsonify({'result': 'success'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
