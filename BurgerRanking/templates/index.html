@@ -18,13 +18,13 @@
 
         <script>
             <!--리뷰 버튼 토글-->
-            function reviewBtn() {
-                if ($('#review_box').css('display') === 'block') {
-                    $('#review_box').hide();
-                    $('#review_btn_box').text('리뷰 보기');
+            function reviewBtn(num) {
+                if ($('#review_box'+ num).css('display') === 'block') {
+                    $('#review_box'+ num).hide();
+                    $(`#review_btn_box`+ num).text('리뷰 보기');
                 } else {
-                    $('#review_box').show();
-                    $('#review_btn_box').text('리뷰 닫기');
+                    $('#review_box'+ num).show();
+                    $('#review_btn_box'+ num).text('리뷰 닫기');
                 }
             }
 
@@ -44,6 +44,7 @@
                         if (response['result'] == 'success') {
                             let burgers = response['all_burgers']
                             for(let i=0; i<burgers.length;i++){
+                                let num = i+1;
                                 let brand = burgers[i].brand;
                                 let name = burgers[i].name;
                                 let img = burgers[i].img_url;
@@ -52,7 +53,7 @@
                                 let dislike = burgers[i].dislike;
 
                                 let temp_html = `<div class="burger_wrap" id="burger_box">
-                                                    <div class="burger_rank"><i>1</i></div>
+                                                    <div class="burger_rank"><i>${num}</i></div>
                                                     <div class="burger_desc clearfix">
                                                         <div class="burger_img"><img src="${img}" alt=""></div>
                                                         <div class="sub_wrap">
@@ -61,8 +62,8 @@
                                                             <p class="burger_sub">${status}</p>
                                                         </div>
                                                         <div class="review_write">
-                                                            <button onclick="reviewBtn()" class="review_btn" id="review_btn_box">리뷰 보기</button>
-                                                            <div class="review_wrap" id="review_box">
+                                                            <button onclick="reviewBtn(${num})" class="review_btn" id="review_btn_box${num}">리뷰 보기</button>
+                                                            <div class="review_wrap" id="review_box${num}">
                                                                 <p class="review">REVIEW</p>
                                                                 <ul class="review_list_wrap">
                                                                     <li class="review_list">맛있음</li>
