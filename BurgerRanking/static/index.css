@@ -31,10 +31,16 @@ button {
 .title{
     display: block;
     padding: 32px 0;
-
+    margin-left: 30%;
     font-size: 32px;
     font-weight: bold;
     text-align: center;
+}
+
+.headerbox{
+    display: flex;
+    justify-content: space-around;
+
 }
 
 /* nav */
@@ -58,6 +64,17 @@ nav {
     margin: 0 10px;
     font-size: 16px;
 }
+
+.logoutbox{
+    margin-top:20px;
+}
+
+.logout {
+    border: 1px solid #888888;
+    padding: 20px;
+    border-radius: 10px;
+}
+
 
 /* main */
 
@@ -139,16 +156,11 @@ nav {
 .like_wrap{
     text-align: center;
 }
-.like{
+.like, .dislike{
     display: inline-block;
     font-size: 14px;
-    border: 2px solid #888888;
-    border-radius: 10%;
-    padding: 18px;
-    margin-top: 30px;
-}
-.like span{
-    display: block;
-    padding-top: 8px;
-    font-size: 18px;
+    border: 1px solid #888888;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-top: 20px;
 }

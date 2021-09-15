@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
-db = client.burger_list
+db = client.project
 
 mac = [
    {'burger_id': 1, 'name': '더블 에그 불고기 버거', 'img_url': 'https://www.mcdonalds.co.kr/upload/product/pcList/1631083489206.png',
