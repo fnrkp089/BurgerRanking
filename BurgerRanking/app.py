@@ -25,6 +25,7 @@ def burgers_review():
 
     return jsonify({'result':'success'})
 
+
 # 좋아요
 @app.route('/like', methods=['POST'])
 def burgers_like():
