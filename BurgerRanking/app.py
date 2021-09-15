@@ -1,10 +1,10 @@
-from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+from pymongo import MongoClient
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -13,8 +13,7 @@ app.config['UPLOAD_FOLDER'] = "./static"
 SECRET_KEY = 'SPARTA'
 
 client = MongoClient('localhost', 27017)
-db = client.project
-
+db = client.burger_list
 
 @app.route('/')
 def home():
@@ -22,12 +21,11 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        return render_template('index.html', user_info=user_info)
+        return render_template('index.html', user_info=user_info['username'])
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
 
 @app.route('/login')
 def login():
@@ -77,12 +75,14 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-
 @app.route('/mainpage', methods=['GET'])
 def burgers_list():
-    burgers = list(db.hamburger.find({},{'_id':False}).sort('like', -1))
+    target = request.args.get('type');
+    if target is not None:
+        burgers = list(db.hamburger.find({'brand' : target}, {'_id': False}).sort('like', -1))
+    else:
+        burgers = list(db.hamburger.find({},{'_id':False}).sort('like', -1))
     return jsonify({'result':'success', 'all_burgers': burgers})
-
 
 #리뷰 불러오기
 @app.route('/get_comment', methods=['GET'])
@@ -95,32 +95,27 @@ def comment_list():
 # 리뷰작성
 @app.route('/comment', methods=['POST'])
 def burgers_review():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]})
-        comment_receive = request.form['comment_give']
-        burgerId = request.form['burgerId']
+    comment_receive = request.form['comment_give']
+    burgerId = request.form['burgerId']
+    username = request.form['username']
+    doc = {
+        'burger_id': burgerId,
+        'username' : username,
+        'comment': comment_receive
+    }
+    db.review.insert_one(doc)
 
-        doc = {
-            'user_id':user_info,
-            'burger_id': burgerId,
-            'comment': comment_receive
-        }
-        db.review.insert_one(doc)
-        return jsonify({'result':'success'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+    return jsonify({'result':'success'})
 
 # 좋아요
 @app.route('/like', methods=['POST'])
 def burgers_like():
     name_receive = request.form['name_give']
-    like = db.hamburger.find_one({'name': name_receive})
-    new_like = like['like'] + 1
+    like = db.hamburger.find_one({'name':name_receive})
+    new_like = like['like']+1
 
-    db.hamburger.update_one({'name': name_receive}, {'$set': {'like': new_like}})
-    return jsonify({'result': 'success'})
+    db.hamburger.update_one({'name':name_receive}, {'$set':{'like': new_like}})
+    return jsonify({'result':'success'})
 
 
 if __name__ == '__main__':
