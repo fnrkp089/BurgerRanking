@@ -18,17 +18,16 @@
 
         <script>
             <!--리뷰 버튼 토글-->
-            function reviewBtn(num,burgerId) {
+            function reviewBtn(num) {
                 if ($('#review_box'+ num).css('display') === 'block') {
                     $('#review_box'+ num).hide();
                     $(`#review_btn_box`+ num).text('리뷰 보기');
                 } else {
                     $('#review_box'+ num).show();
                     $('#review_btn_box'+ num).text('리뷰 닫기');
-                    console.log(burgerId);
-                    getComment(burgerId);
                 }
             }
+
             // API
             $(document).ready(function () {
                 showBurgers();
@@ -51,8 +50,7 @@
                                 let img = burgers[i].img_url;
                                 let status = burgers[i].status;
                                 let like = burgers[i].like;
-                                let dislike = burgers[i].dislike;
-                                let burgerId = burgers[i].burger_id;
+
                                 let temp_html = `<div class="burger_wrap" id="burger_box">
                                                     <div class="burger_rank"><i>${num}</i></div>
                                                     <div class="burger_desc clearfix">
@@ -63,20 +61,20 @@
                                                             <p class="burger_sub">${status}</p>
                                                         </div>
                                                         <div class="review_write">
-                                                            <button onclick="reviewBtn(${num},${burgerId})" class="review_btn" id="review_btn_box${num}">리뷰 보기</button>
+                                                            <button onclick="reviewBtn(${num})" class="review_btn" id="review_btn_box${num}">리뷰 보기</button>
                                                             <div class="review_wrap" id="review_box${num}">
                                                                 <p class="review">REVIEW</p>
-                                                                    <ul class="review_list_wrap${burgerId}">
-                                                                        ##
-                                                                    </ul>
-                                                                <textarea class="review_text" id="review_comment${num}" cols="30" rows="5" placeholder="리뷰를 입력하세요"></textarea>
-                                                                <button onclick="comment(${num}, ${burgerId})" class="review_complete" id="review_complete_btn">리뷰 등록</button>
+                                                                <ul class="review_list_wrap">
+                                                                    <li class="review_list">맛있음</li>
+                                                                    <li class="review_list">나쁘지않음</li>
+                                                                </ul>
+                                                                <textarea class="review_text" id="review_comment" cols="30" rows="5" placeholder="리뷰를 입력하세요"></textarea>
+                                                                <button onclick="comment()" class="review_complete" id="review_complete_btn">리뷰 등록</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="like_wrap">
                                                         <a href="#" onclick="like('${name}')" class="like">좋아요 <span><b>${like}</b></span></a>
-                                                        <a href="#" onclick="dislike('${name}')" class="dislike">싫어요 <span><b>${dislike}</b></span></a>
                                                     </div>
                                                 </div>`
                                 $('#burgers_box').append(temp_html);
@@ -86,38 +84,14 @@
                 });
             }
 
-            //리뷰 불러오기
-            function getComment(number){
-                 $.ajax({
-                    type: 'GET',
-                    url: '/get_comment',
-                    data: {burgerComment:number},
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            let commentList = response['commentList']
-                            console.log(commentList);
-                            for(let i=0; i<commentList.length ; i++) {
-                                let burgerid = commentList[i].burgerId
-                                let comment = commentList[i].comment
-                                console.log(comment)
-                                let temp_html =
-                                    ` <li class="review_list">${comment}</li>`
-                                 $('#review_list_wrap'+burgerid).append(temp_html);
-                            }
-                        }
-                    }
-                });
-            }
-
             // 리뷰 작성
-            function comment(Num, BurgerId) {
-                let burgerId = BurgerId;
-                let review = $('#review_comment'+Num).val();
+            function comment() {
+                let review = $('#review_comment').val();
 
                 $.ajax({
                     type: 'POST',
                     url: '/comment',
-                    data: {comment_give:review, burgerId:burgerId},
+                    data: {comment_give:review},
                     success: function (response) {
                         if (response['result'] == 'success') {
                             alert('리뷰작성 완료');
@@ -142,20 +116,6 @@
                 });
             }
 
-            // 싫어요
-            function dislike(name) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/dislike',
-                    data: {'name_give':name},
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            alert('싫어요 완료');
-                            window.location.reload();
-                        }
-                    }
-                });
-            }
         </script>
     </head>
     <body>
@@ -203,7 +163,6 @@
 <!--                </div>-->
 <!--                <div class="like_wrap">-->
 <!--                    <button type="button" class="like">좋아요 <span><b>10</b></span></button>-->
-<!--                    <button type="button" class="dislike">싫어요 <span><b>2</b></span></button>-->
 <!--                </div>-->
 <!--            </div>-->
         </div>
