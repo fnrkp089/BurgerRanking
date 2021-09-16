@@ -164,3 +164,8 @@ nav {
     padding: 10px 20px;
     margin-top: 20px;
 }
+
+.comment{
+    color: red;
+    font-size: 13px;
+}
