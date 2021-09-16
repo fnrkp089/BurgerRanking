@@ -15,25 +15,25 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
                 integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
                 crossorigin="anonymous"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
         <script>
             <!--리뷰 버튼 토글-->
-            function reviewBtn(num,burgerId) {
-                if ($('#review_box'+ num).css('display') === 'block') {
-                    $('#review_box'+ num).hide();
-                    $(`#review_btn_box`+ num).text('리뷰 보기');
-                    $('#review_list_box'+burgerId).empty();
+            function reviewBtn(num, burgerId) {
+                if ($('#review_box' + num).css('display') === 'block') {
+                    $('#review_box' + num).hide();
+                    $(`#review_btn_box` + num).text('리뷰 보기');
+                    $('#review_list_box' + burgerId).empty();
                 } else {
-                    $('#review_box'+ num).show();
-                    $('#review_btn_box'+ num).text('리뷰 닫기');
+                    $('#review_box' + num).show();
+                    $('#review_btn_box' + num).text('리뷰 닫기');
                     console.log(burgerId);
                     getComment(burgerId);
                 }
             }
 
             // API
-            let brandName  ;
+            let brandName;
             let user_info = '{{user_info}}'
             console.log(user_info)
             $(document).ready(function () {
@@ -41,18 +41,18 @@
             });
 
             function showBurgers(string) {
-                if(String !== undefined)
+                if (String !== undefined)
                     brandName = string
                 $('#burgers_box').empty();
                 $.ajax({
                     type: 'GET',
                     url: '/mainpage',
-                    data: {type:string},
+                    data: {type: string},
                     success: function (response) {
                         if (response['result'] == 'success') {
                             let burgers = response['all_burgers']
-                            for(let i=0; i<burgers.length;i++){
-                                let num = i+1;
+                            for (let i = 0; i < burgers.length; i++) {
+                                let num = i + 1;
                                 let brand = burgers[i].brand;
                                 let name = burgers[i].name;
                                 let img = burgers[i].img_url;
@@ -77,7 +77,7 @@
                                                                 </ul>
                                                                 <textarea class="review_text" id="review_comment${num}" cols="30" rows="5" placeholder="리뷰를 입력하세요"></textarea>
                                                                 <p id="comment-id${num}"></p>
-                                                                <button onclick="comment(${num}, ${burgerId})" class="review_complete" id="review_complete_btn">리뷰 등록</button>
+					                                            <button onclick="comment(${num}, ${burgerId})" class="review_complete" id="review_complete_btn">리뷰 등록</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -91,31 +91,48 @@
                     }
                 });
             }
+
             //아이디 마스킹
-             function maskingUser(user) {
+            function maskingUser(user) {
                 let masked = user.replace(/(?<=.{4})./gi, "*");
-               return masked
-             }
+                return masked
+            }
+
             //리뷰 불러오기
-            function getComment(number){
-                 $.ajax({
+            function getComment(number) {
+                $.ajax({
                     type: 'GET',
                     url: '/get_comment',
-                    data: {burgerComment:number},
+                    data: {burgerComment: number},
                     success: function (response) {
                         if (response['result'] == 'success') {
                             let commentList = response['commentList']
                             console.log(commentList);
-                            for(let i=0; i<commentList.length ; i++) {
+                            for (let i = 0; i < commentList.length; i++) {
                                 let burgerid = commentList[i].burger_id
                                 let comment = commentList[i].comment
                                 let username = commentList[i].username
-                                if(username !== undefined){
+                                if (username !== undefined) {
                                     username = maskingUser(username)
                                 }
-                                let temp_html =
-                                    ` <li class="review_list">${username} : ${comment}</li>`
-                                 $('#review_list_box'+burgerid).append(temp_html);
+                                let temp_html = ` <li class="review_list">
+                                                    <textarea id="review_edit${username}" class="review_edit" ></textarea>
+                                                    <span id="review_comment${username}">${comment}</span>
+                                                    <span class="review_user">${username}</span>
+                                                    <div class="btn_wrap">
+                                                        <div id="review_btn_box${username}" class="review_btn_wrap">
+                                                            <button onclick="reviewEdit('${username}')" class="review_edit_btn">수정</button>
+                                                            <span>|</span>
+                                                            <button onclick="reviewDelete(${username})" class="review_delete_btn">삭제</button>
+                                                        </div>
+                                                        <div id="edit_btn_box${username}" class="edit_btn_wrap">
+                                                            <button onclick="editComplete('${username}')" class="edit_complete_btn">완료</button>
+                                                            <span>|</span>
+                                                            <button onclick="editCancel('${username}')" class="edit_cancel_btn">취소</button>
+                                                        </div>
+                                                    </div>
+                                                </li>`
+                                $('#review_list_box' + burgerid).append(temp_html);
                             }
                         }
                     }
@@ -123,22 +140,78 @@
             }
 
             // 리뷰 작성
-           function comment(Num, BurgerId) {
+            function comment(Num, BurgerId) {
                 let burgerId = BurgerId;
-                let review = $('#review_comment'+Num).val();
-                if(review == ""){
-                    $("#comment-id"+Num).text("리뷰를 입력해주세요").addClass("comment");
-                    $("#review_comment"+Num).focus();
+                let review = $('#review_comment' + Num).val();
+                if (review == "") {
+                    $("#comment-id" + Num).text("리뷰를 입력해주세요").addClass("comment");
+                    $("#review_comment" + Num).focus();
                     return;
                 }
                 $.ajax({
                     type: 'POST',
                     url: '/comment',
-                    data: {comment_give:review, burgerId:burgerId, username:user_info},
+                    data: {comment_give: review, burgerId: burgerId, username: user_info},
                     success: function (response) {
                         if (response['result'] == 'success') {
                             alert('리뷰작성 완료');
-                           showBurgers(brandName);
+                            showBurgers(brandName);
+                        }
+                    }
+                });
+            }
+
+            // 리뷰 수정
+            function reviewEdit(username) {
+                showEdit(username);
+                let comment = $(`#review_comment${username}`).text();
+                $(`#review_edit${username}`).val(comment);
+            }
+
+            function showEdit(username) {
+                $(`#review_edit${username}`).show();
+                $(`#edit_btn_box${username}`).show();
+
+                $(`#review_comment${username}`).hide();
+                $(`#review_btn_box${username}`).hide();
+            }
+
+            // 리뷰 수정 완료
+            function editComplete(username) {
+                let comment = $(`#review_edit${username}`).val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/comment_edit',
+                    data: {username_give: username, comment_give: comment},
+                    success: function (response) {
+                        if (response['result'] === 'success') {
+                            showBurgers(brandName);
+                        }
+                    }
+                })
+            }
+
+            // 리뷰 수정 취소
+            function editCancel(username) {
+                $(`#review_edit${username}`).hide();
+                $(`#edit_btn_box${username}`).hide();
+
+                $(`#review_comment${username}`).show();
+                $(`#review_btn_box${username}`).show();
+            }
+
+
+            // 리뷰 삭제
+            function reviewDelete(comment) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/comment_delete',
+                    data: {comment_give: comment},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            alert('리뷰를 삭제했습니다.')
+                            showBurgers(brandName);
                         }
                     }
                 });
@@ -149,33 +222,33 @@
                 $.ajax({
                     type: 'POST',
                     url: '/like',
-                    data: {'name_give':name},
+                    data: {'name_give': name},
                     success: function (response) {
                         if (response['result'] == 'success') {
                             alert('좋아요 완료');
-                           showBurgers(brandName);
+                            showBurgers(brandName);
                         }
                     }
                 });
             }
 
 
-        function sign_out() {
-            $.removeCookie('mytoken', {path: '/'});
-            alert('로그아웃!')
-            window.location.href = "/login"
-        }
+            function sign_out() {
+                $.removeCookie('mytoken', {path: '/'});
+                alert('로그아웃!')
+                window.location.href = "/login"
+            }
         </script>
     </head>
     <body>
-       <header>
-        <div class="headerbox">
-            <a href="" class="title">BURGER RANKING</a>
-            <div class="logoutbox">
-                <button onclick="sign_out()" class="logout">로그아웃</button>
+        <header>
+            <div class="headerbox">
+                <a href="" class="title">BURGER RANKING</a>
+                <div class="logoutbox">
+                    <button onclick="sign_out()" class="logout">로그아웃</button>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
         <nav>
             <ol>
                 <li class="nav_menu">
@@ -193,7 +266,7 @@
             </ol>
         </nav>
         <div class="burgers" id="burgers_box">
-        <!-- 추가 될 내용-->
+            <!-- 추가 될 내용-->
         </div>
     </body>
 </html>

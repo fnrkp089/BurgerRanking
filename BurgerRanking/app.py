@@ -107,6 +107,32 @@ def burgers_review():
 
     return jsonify({'result':'success'})
 
+
+# 리뷰 수정
+@app.route('/comment_edit', methods=['POST'])
+def review_edit():
+    username_receive = request.form['username_give']
+    comment_receive = request.form['comment_give']
+    db.review.update_one({'name':username_receive}, {'$set':{'comment':comment_receive}})
+    return jsonify({'result': 'success'})
+
+# 리뷰 삭제
+@app.route('/comment_delete', methods=['POST'])
+def review_delete():
+    # comment_receive = request.form['comment_give']
+    # username_receive = request.form['username_give']
+    # doc = {
+    #     'comment': comment_receive,
+    #     'burger_id': username_receive
+    # }
+    # db.review.delete_one(doc)
+
+    comment_receive = request.form['comment_give']
+    db.review.delete_one(comment_receive)
+
+    return jsonify({'result': 'success'})
+
+
 # 좋아요
 @app.route('/like', methods=['POST'])
 def burgers_like():

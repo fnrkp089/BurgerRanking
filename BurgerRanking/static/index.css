@@ -85,7 +85,7 @@ nav {
 
 .burger_wrap{
     display: grid;
-    grid-template-columns: 1fr 12fr 3fr;
+    grid-template-columns: 2fr 10fr 3fr;
     margin: 60px 0;
 }
 .burger_rank{
@@ -133,13 +133,43 @@ nav {
     font-size: 16px;
     font-weight: bold;
 }
+
 .review_list_wrap{
     padding: 10px 20px;
 }
 .review_list{
+    line-height: 1.7;
     padding: 8px 0;
+    word-break: break-all;
     list-style: disc;
 }
+.review_edit{
+    display: none;
+    width: 100%;
+    border: 1px solid #bdbdbd;
+    padding: 4px;
+    margin-top: 20px;
+}
+.review_user{
+    font-size: 12px;
+    color: #666666;
+}
+.btn_wrap{
+    float: right;
+}
+
+.review_edit_btn, .review_delete_btn{
+    color: #888888;
+    margin: 2px;
+}
+.edit_btn_wrap{
+    display: none;
+}
+.edit_complete_btn, .edit_cancel_btn{
+    color: #888888;
+    margin: 2px;
+}
+
 .review_text{
     width: 95%;
     border: 1px solid #444444;
