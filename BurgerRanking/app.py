@@ -90,22 +90,27 @@ def comment_list():
     burgerid = request.args.get('burgerComment')
     print(burgerid)
     comment = list(db.review.find({'burger_id': burgerid} , {'_id':False}))
+
     return jsonify({'result': 'success', 'commentList': comment})
 
 # 리뷰작성
 @app.route('/comment', methods=['POST'])
 def burgers_review():
-    comment_receive = request.form['comment_give']
-    burgerId = request.form['burgerId']
-    username = request.form['username']
-    doc = {
-        'burger_id': burgerId,
-        'username' : username,
-        'comment': comment_receive
-    }
-    db.review.insert_one(doc)
-
-    return jsonify({'result':'success'})
+    try:
+        comment_receive = request.form['comment_give']
+        burgerId = request.form['burgerId']
+        username = request.form['username']
+        commentid = request.form['comment_id']
+        doc = {
+            'comment_id': commentid,
+            'burger_id': burgerId,
+            'username' : username,
+            'comment': comment_receive,
+        }
+        db.review.insert_one(doc)
+        return jsonify({'result':'success'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 
 # 리뷰 수정
@@ -119,16 +124,9 @@ def review_edit():
 # 리뷰 삭제
 @app.route('/comment_delete', methods=['POST'])
 def review_delete():
-    # comment_receive = request.form['comment_give']
-    # username_receive = request.form['username_give']
-    # doc = {
-    #     'comment': comment_receive,
-    #     'burger_id': username_receive
-    # }
-    # db.review.delete_one(doc)
-
+    print("삭제")
     comment_receive = request.form['comment_give']
-    db.review.delete_one(comment_receive)
+    db.review.delete_one({"comment_id":comment_receive})
 
     return jsonify({'result': 'success'})
 

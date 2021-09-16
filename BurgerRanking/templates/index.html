@@ -109,6 +109,7 @@
                             let commentList = response['commentList']
                             console.log(commentList);
                             for (let i = 0; i < commentList.length; i++) {
+                                let commentid = commentList[i].comment_id
                                 let burgerid = commentList[i].burger_id
                                 let comment = commentList[i].comment
                                 let username = commentList[i].username
@@ -121,9 +122,9 @@
                                                     <span class="review_user">${username}</span>
                                                     <div class="btn_wrap">
                                                         <div id="review_btn_box${username}" class="review_btn_wrap">
-                                                            <button onclick="reviewEdit('${username}')" class="review_edit_btn">수정</button>
+                                                            <button onclick="reviewEdit(${commentid})" class="review_edit_btn" >수정</button>
                                                             <span>|</span>
-                                                            <button onclick="reviewDelete(${username})" class="review_delete_btn">삭제</button>
+                                                            <button onclick="reviewDelete('${commentid}')" class="review_delete_btn" >삭제</button>
                                                         </div>
                                                         <div id="edit_btn_box${username}" class="edit_btn_wrap">
                                                             <button onclick="editComplete('${username}')" class="edit_complete_btn">완료</button>
@@ -143,6 +144,7 @@
             function comment(Num, BurgerId) {
                 let burgerId = BurgerId;
                 let review = $('#review_comment' + Num).val();
+                let today = new Date().toISOString()
                 if (review == "") {
                     $("#comment-id" + Num).text("리뷰를 입력해주세요").addClass("comment");
                     $("#review_comment" + Num).focus();
@@ -151,7 +153,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '/comment',
-                    data: {comment_give: review, burgerId: burgerId, username: user_info},
+                    data: {comment_id: today,comment_give: review, burgerId: burgerId, username: user_info},
                     success: function (response) {
                         if (response['result'] == 'success') {
                             alert('리뷰작성 완료');
@@ -203,11 +205,12 @@
 
 
             // 리뷰 삭제
-            function reviewDelete(comment) {
+            function reviewDelete(commentid) {
+
                 $.ajax({
                     type: 'POST',
                     url: '/comment_delete',
-                    data: {comment_give: comment},
+                    data: { comment_give: commentid },
                     success: function (response) {
                         if (response['result'] == 'success') {
                             alert('리뷰를 삭제했습니다.')
