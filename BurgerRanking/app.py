@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = "./static"
 SECRET_KEY = 'SPARTA'
 
 client = MongoClient('localhost', 27017)
-db = client.burger_list
+db = client.project
 
 @app.route('/')
 def home():

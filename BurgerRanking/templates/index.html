@@ -76,6 +76,7 @@
 
                                                                 </ul>
                                                                 <textarea class="review_text" id="review_comment${num}" cols="30" rows="5" placeholder="리뷰를 입력하세요"></textarea>
+                                                                <p id="comment-id${num}"></p>
                                                                 <button onclick="comment(${num}, ${burgerId})" class="review_complete" id="review_complete_btn">리뷰 등록</button>
                                                             </div>
                                                         </div>
@@ -125,6 +126,11 @@
            function comment(Num, BurgerId) {
                 let burgerId = BurgerId;
                 let review = $('#review_comment'+Num).val();
+                if(review == ""){
+                    $("#comment-id"+Num).text("리뷰를 입력해주세요").addClass("comment");
+                    $("#review_comment"+Num).focus();
+                    return;
+                }
                 $.ajax({
                     type: 'POST',
                     url: '/comment',
