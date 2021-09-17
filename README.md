@@ -41,6 +41,12 @@
   **URL :**/comment  
   **request :**{'burger_id':burger_id, 'user':user', 'comment':comment}  
   **response :** '로그인 한 유저만 리뷰 작성'  
+  
+  > **리뷰삭제 api**  
+  **<span style="color:olivedrab">POST</span>**  
+  **URL :**/comment_delete  
+  **request :**{'burger_id':burger_id, 'comment_id':comment_id', 'user':user}  
+  **response :** '해당 리뷰 작성자일경우에만 삭제'  
 
   >**좋아요 api**  
   **<span style="color:olivedrab">POST</span>**  
