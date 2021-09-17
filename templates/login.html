@@ -3,7 +3,7 @@
 <head>
 
     <!-- Webpage Title -->
-    <title>랭킹버거 로그인</title>
+    <title>버거랭킹 로그인</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -26,8 +26,8 @@
 
     <script>
         // {% if msg %}
-        //     alert("{{ msg }}")
-        // {% endif %}
+            //     alert("{{ msg }}")
+            // {% endif %}
 
         function sign_in() {
             let username = $("#input-username").val()
@@ -133,7 +133,7 @@
 
         function check_dup() {
             let username = $("#input-username").val()
-            console.log(username)
+
             if (username == "") {
                 $("#help-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                 $("#input-username").focus()
@@ -225,7 +225,7 @@
 <section class="hero is-white">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
         <h1 class="title is-sparta">버거랭킹</h1>
-        <h3 class="subtitle is-sparta">세상을 알딸딸하게</h3>
+        <h3 class="subtitle is-sparta">당신의 버거를 선택하세요</h3>
     </div>
 </section>
 <section class="section">
