@@ -1,26 +1,45 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>버거랭킹</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>버거랭킹</title>
 
-	<!--CSS-->
-	<link rel="stylesheet" href="/static/index.css">
+        <!-- Bulma CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
-	<!--JS-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	 crossorigin="anonymous">
-	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js">
-	</script>
+        <!--CSS-->
+        <link rel="stylesheet" href="/static/index.css">
 
-	<script>
-		<!--리뷰 버튼 토글-->
+
+        <!--FONT-->
+        <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Yeon+Sung&display=swap"
+              rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+        <!--ICON-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--JS-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js">
+        </script>
+
+        <script>
+            <!--리뷰 버튼 토글-->
             function reviewBtn(num, burgerId) {
                 if ($('#review_box' + num).css('display') === 'block') {
                     $('#review_box' + num).hide();
@@ -79,12 +98,20 @@
                                                                     </ul>
                                                                     <textarea class="review_text" id="review_comment${num}" cols="30" rows="5" placeholder="리뷰를 입력하세요"></textarea>
                                                                     <p id="comment-id${num}"></p>
-                                                                    <button onclick="comment(${num}, ${burgerId})" class="review_complete hover7" id="review_complete_btn">리뷰 등록</button>
+                                                                    <div class="review_complete_wrap">
+                                                                        <button onclick="comment(${num}, ${burgerId})" class="review_complete hover7" id="review_complete_btn">리뷰 등록</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="like_wrap">
-                                                            <a href="#" onclick="like('${name}')" class="like hover3">사랑해요 <span><b>${like}</b></span></a>
+                                                            <a href="#" onclick="like('${name}')" class="like hover3">
+                                                                <span class="like_icon material-icons">
+                                                                    favorite_border
+                                                                </span>
+                                                                <br>
+                                                                <span class="like_count">${like}</span>
+                                                            </a>
                                                         </div>
                                                     </div>`
                                 $('#burgers_box').append(temp_html);
@@ -121,12 +148,17 @@
                                 }
                                 if (username2 == '{{user_info}}') {
                                     let temp_html = ` <li class="review_list">
-                                                        <textarea id="review_edit${username}" class="review_edit" ></textarea>
-                                                        <span id="review_comment${username}">${comment}</span>
-                                                        <span class="review_user">${username}</span>
-                                                        <div class="btn_wrap">
-
-                                                            <div id="review_btn_box${username}" class="review_btn_wrap">
+                                                        <div class="review_div clearfix">
+                                                            <div class="review_icon_wrap">
+                                                                <span class="review_icon material-icons">
+                                                                    arrow_right
+                                                                </span>
+                                                            </div>
+                                                            <div class="review_main_wrap">
+                                                                <span id="review_comment${username}">${comment}</span>
+                                                                <span class="review_user">${username}</span>
+                                                            </div>
+                                                                <div id="review_btn_box${username}" class="btn_wrap">
                                                                 <button onclick="reviewDelete('${commentid}')" class="review_delete_btn hover5" >삭제</button>
                                                             </div>
                                                         </div>
@@ -134,9 +166,17 @@
                                     $('#review_list_box' + burgerid).append(temp_html)
                                 } else {
                                     let temp_html = ` <li class="review_list">
-                                                        <textarea id="review_edit${username}" class="review_edit" ></textarea>
-                                                        <span id="review_comment${username}">${comment}</span>
-                                                        <span class="review_user">${username}</span>
+                                                        <div class="review_div clearfix">
+                                                            <div class="review_icon_wrap">
+                                                                <span class="review_icon material-icons">
+                                                                    arrow_right
+                                                                </span>
+                                                            </div>
+                                                            <div class="review_main_wrap">
+                                                                <span id="review_comment${username}">${comment}</span>
+                                                                <span class="review_user">${username}</span>
+                                                            </div>
+                                                        </div>
                                                     </li>`
                                     $('#review_list_box' + burgerid).append(temp_html);
                                 }
@@ -209,36 +249,38 @@
                 alert('로그아웃!')
                 window.location.href = "/login"
             }
-	</script>
-</head>
+        </script>
+    </head>
 
-<body>
-	<header>
-		<div class="headerbox">
-			<a href="" class="title">BURGER RANKING</a>
-			<div class="logoutbox">
-				<button onclick="sign_out()" class="logout hover2">로그아웃</button>
+    <body>
+        <header class="hero is-white">
+            <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
+                <h1 class="title is-sparta">버거랭킹</h1>
+                <h3 class="subtitle is-sparta">당신의 버거를 선택하세요</h3>
+
             </div>
+        </header>
+        <nav class="clearfix">
+            <ol>
+                <li class="nav_menu">
+                    <button class="nav_btn hover1" onclick="window.location.reload()">ALL</button>
+                </li>
+                <li class="nav_menu">
+                    <button class="nav_btn hover1" onclick="showBurgers('McDonald')">McDonald</button>
+                </li>
+                <li class="nav_menu">
+                    <button class="nav_btn hover1" onclick="showBurgers('BURGER KING')">BURGER KING</button>
+                </li>
+                <li class="nav_menu">
+                    <button class="nav_btn hover1" onclick="showBurgers('LOTTERIA')">LOTTERIA</button>
+                </li>
+            </ol>
+            <div class="logoutbox">
+                <button onclick="sign_out()" class="logout hover2">LOGOUT</button>
+            </div>
+        </nav>
+        <div class="burgers" id="burgers_box">
+            <!-- 추가 될 내용-->
         </div>
-    </header>
-    <nav>
-        <ol>
-            <li class="nav_menu">
-                <button class="nav_btn hover1" onclick="window.location.reload()">ALL</button>
-            </li>
-            <li class="nav_menu">
-                <button class="nav_btn hover1" onclick="showBurgers('맥도날드')">McDonald</button>
-            </li>
-            <li class="nav_menu">
-                <button class="nav_btn hover1" onclick="showBurgers('버거킹')">BURGER KING</button>
-            </li>
-            <li class="nav_menu">
-                <button class="nav_btn hover1" onclick="showBurgers('롯데리아')">LOTTERIA</button>
-            </li>
-        </ol>
-    </nav>
-    <div class="burgers" id="burgers_box">
-        <!-- 추가 될 내용-->
-    </div>
     </body>
-    </html>
+</html>

@@ -16,9 +16,11 @@ li {
 }
 
 body {
+    font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
 }
 
 button {
+    font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
     background: none;
     outline: none;
     cursor: pointer;
@@ -33,62 +35,67 @@ button {
 /*--------------------------------------*/
 
 /* header */
+
+header {
+    padding: 1rem 1.5rem;
+    max-width: 750px;
+    margin: auto;
+}
+
 .title {
-    display: block;
-    padding: 32px 0;
-    margin-left: 30%;
-    font-size: 32px;
-    font-weight: bold;
-    text-align: center;
+    font-weight: 800;
+    font-size: 5rem;
+    font-family: 'Black Han Sans', sans-serif;
 }
 
-.headerbox {
-    display: flex;
-    justify-content: space-around;
-
+.subtitle {
+    font-size: 2rem;
+    font-family: 'Yeon Sung', cursive;
 }
+
+.is-sparta {
+    color: #f2d30a !important;
+}
+
 
 /* nav */
 
 nav {
     padding: 32px 0;
-    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
 }
-
+nav ol{
+    float: left;
+}
 .nav_menu {
     display: inline-block;
 }
 
-.nav_menu .on {
-    background-color: #888888;
-    color: #ffffff;
-}
-
 .nav_btn {
-    border: 1px solid;
+    border: 1px solid #888888;
     padding: 10px 20px;
-    margin: 0 10px;
+    margin-right: 30px;
     font-size: 16px;
 }
 
 .nav_btn:hover {
+    border: rgba(240, 178, 10, 0.5);
     color: #fff;
 }
-
 .hover1:hover {
     box-shadow: 200px 0 0 0 rgba(240, 178, 10, 0.5) inset;
 }
 
-
 .logoutbox {
-    margin-top: 20px;
+    float: right;
 }
-
 .logout {
-    border: 1px solid #888888;
-    padding: 20px;
-    border-radius: 10px;
     background-color: #EDB118;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
 }
 
 .logout:hover {
@@ -98,6 +105,7 @@ nav {
 .hover2:hover {
     box-shadow: -200px 0 0 0 rgba(0, 0, 0, 0.5) inset;
 }
+
 
 /* main */
 
@@ -123,7 +131,7 @@ nav {
 
 .burger_img {
     box-sizing: border-box;
-    width: 35%;
+    width: 40%;
     float: left;
 }
 
@@ -133,13 +141,21 @@ nav {
 
 .sub_wrap {
     box-sizing: border-box;
-    padding: 16px;
-    width: 65%;
+    padding: 4px 0 0 30px;
+    width: 60%;
+    word-break: keep-all;
     float: left;
 }
 
 .burger_brand, .burger_name, .burger_sub {
     margin: 10px 0;
+}
+.burger_brand{
+    font-style: italic;
+}
+.burger_name{
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .review_write {
@@ -150,8 +166,8 @@ nav {
 
 .review_btn {
     padding: 10px 20px;
-    margin: 10px 0;
-    background-color: #11eaea;
+    margin: 20px 0;
+    background-color: #EDB118;
     color: #ffffff;
 }
 
@@ -160,7 +176,8 @@ nav {
 }
 
 .hover4:hover {
-    box-shadow: 200px 0 0 0 rgba(18, 42, 220, 0.25) inset, -200px 0 0 0 rgba(4, 35, 243, 0.25) inset;
+    box-shadow:  -200px 0 0 0 #EDB118 inset;
+    /*200px 0 0 0 rgba(18, 42, 220, 0.25) inset,*/
 }
 
 
@@ -176,25 +193,26 @@ nav {
 }
 
 .review_list_wrap {
-    padding: 10px 20px;
+    padding: 10px 0;
 }
 
 .review_list {
-    line-height: 1.7;
     padding: 8px 0;
     word-break: break-all;
-    list-style: disc;
 }
 
-.review_edit {
-    display: none;
-    width: 100%;
-    border: 1px solid #bdbdbd;
-    padding: 4px;
-    margin-top: 20px;
+.review_icon_wrap{
+    width: 25px;
+    float: left;
+}
+.review_main_wrap{
+    width: 85%;
+    float: left;
 }
 
 .review_user {
+    display: inline-block;
+    padding-left: 6px;
     font-size: 12px;
     color: #666666;
 }
@@ -205,7 +223,8 @@ nav {
 
 .review_delete_btn {
     color: #888888;
-    margin: 2px;
+    padding: 4px 6px;
+    border: 1px solid #666666;
 }
 
 .review_delete_btn:hover {
@@ -214,34 +233,33 @@ nav {
 
 .hover5:hover {
     box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.5) inset;
-}
 
-
-.edit_btn_wrap {
-    display: none;
-}
-
-.edit_complete_btn, .edit_cancel_btn {
-    color: #888888;
-    margin: 2px;
 }
 
 .review_text {
-    width: 95%;
-    border: 1px solid #444444;
-    border-radius: 10px;
-    padding: 10px;
+    width: 100%;
+    border-top: 1px solid #bdbdbd;
+    border-bottom: 1px solid #bdbdbd;
+    padding: 20px;
 }
 
+.review_complete_wrap{
+    text-align: center;
+}
 .review_complete {
     padding: 10px 20px;
     margin: 20px 0;
-    background-color: #666666;
-    color: #ffffff;
+    border: 2px solid #EDB118;
+    color: #888888;
 }
-.review_complete:hover{color:#fff;}
 
-.hover7:hover{ box-shadow:200px 0 0 0 rgba(48, 238, 5, 0.5) inset; }
+.review_complete:hover {
+    color: #fff;
+}
+
+.hover7:hover {
+    box-shadow: 200px 0 0 0 #EDB118 inset;
+}
 
 .like_wrap {
     text-align: center;
@@ -249,12 +267,17 @@ nav {
 
 .like {
     display: inline-block;
+    border: 2px solid rgba(240, 178, 10, 0.5);
     font-size: 14px;
-    border: 1px solid #888888;
     border-radius: 10px;
-    padding: 10px 20px;
-    margin-top: 20px;
-    background-color: deeppink;
+    padding: 10px 25px;
+    margin-top: 10px;
+}
+.like_icon, .like_count{
+    color: #666666;
+}
+.like_count{
+    font-weight: bold;
 }
 
 .like:hover {
@@ -262,7 +285,7 @@ nav {
 }
 
 .hover3:hover {
-    box-shadow: 0 80px 0 0 rgba(236, 17, 17, 0.25) inset, 0 -80px 0 0 rgba(243, 6, 6, 0.95) inset;
+    box-shadow:  0 -80px 0 0 rgba(240, 178, 10, 0.5) inset;
 }
 
 .comment {
