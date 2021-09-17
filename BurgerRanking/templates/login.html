@@ -3,7 +3,7 @@
 <head>
 
     <!-- Webpage Title -->
-    <title>Log In | SWEETER</title>
+    <title>버거랭킹 로그인</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -26,8 +26,8 @@
 
     <script>
         // {% if msg %}
-            //     alert("{{ msg }}")
-            // {% endif %}
+        //     alert("{{ msg }}")
+        // {% endif %}
 
         function sign_in() {
             let username = $("#input-username").val()
@@ -66,21 +66,21 @@
             });
         }
 
-        function sign_up(){
+        function sign_up() {
             let username = $("#input-username").val()
             let password = $("#input-password").val()
             let password2 = $("#input-password2").val()
             let name = $("#input-name").val()
 
-            if(password ==""){
+            if (password == "") {
                 $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                 $("#input_password").focus()
                 return
-            }else if(!is_password(password)){
+            } else if (!is_password(password)) {
                 $("#help-password").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
                 $("#input_password").focus()
                 return
-            }else{
+            } else {
                 $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
             }
 
@@ -201,6 +201,15 @@
             color: #fff !important;
         }
 
+        .button.is-sparta:hover {
+            color: #fff;
+        }
+
+        .hover8:hover {
+            box-shadow: 450px 0 0 0 rgba(0, 0, 0, 0.5) inset;
+        }
+
+
         .button.is-sparta.is-outlined {
             background-color: transparent;
             border-color: #f2d30a;
@@ -216,7 +225,7 @@
 <section class="hero is-white">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
         <h1 class="title is-sparta">버거랭킹</h1>
-        <h3 class="subtitle is-sparta">세상을 달달하게</h3>
+        <h3 class="subtitle is-sparta">세상을 알딸딸하게</h3>
     </div>
 </section>
 <section class="section">
@@ -231,7 +240,7 @@
                                 <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
                             </div>
                             <div id="btn-check-dup" class="control is-hidden">
-                                <button class="button is-sparta" onclick="check_dup()">중복확인</button>
+                                <button class="button is-sparta hover8" onclick="check_dup()">중복확인</button>
                             </div>
 
                         </div>
@@ -252,7 +261,7 @@
                     </div>
                     <div id="div-sign-in-or-up" class="has-text-centered">
                         <nav class="level is-mobile">
-                            <button class="level-item button is-sparta" onclick="sign_in()">
+                            <button class="level-item button is-sparta hover8" onclick="sign_in()">
                                 로그인
                             </button>
 
@@ -261,7 +270,7 @@
                         <h4 class="mb-3">아직 회원이 아니라면</h4>
                         <nav class="level is-mobile">
 
-                            <button class="level-item button is-sparta is-outlined"
+                            <button class="level-item button is-sparta is-outlined hover8"
                                     onclick="toggle_sign_up()">
                                 회원가입하기
                             </button>
@@ -288,10 +297,10 @@
                             </div>
                         </div>
                         <nav class="level is-mobile">
-                            <button class="level-item button is-sparta" onclick="sign_up()">
+                            <button class="level-item button is-sparta hover8" onclick="sign_up()">
                                 회원가입
                             </button>
-                            <button class="level-item button is-sparta is-outlined" onclick="toggle_sign_up()">
+                            <button class="level-item button is-sparta is-outlined hover8" onclick="toggle_sign_up()">
                                 취소
                             </button>
                         </nav>

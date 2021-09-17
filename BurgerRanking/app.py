@@ -2,7 +2,6 @@ import jwt
 import datetime
 import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
-from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 from pymongo import MongoClient
 
@@ -12,8 +11,10 @@ app.config['UPLOAD_FOLDER'] = "./static"
 
 SECRET_KEY = 'SPARTA'
 
+#client = MongoClient('mongodb://test:test@localhost', 27017)
 client = MongoClient('localhost', 27017)
 db = client.project
+
 
 @app.route('/')
 def home():
@@ -26,6 +27,7 @@ def home():
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
 
 @app.route('/login')
 def login():
@@ -75,23 +77,26 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
+
 @app.route('/mainpage', methods=['GET'])
 def burgers_list():
     target = request.args.get('type');
     if target is not None:
-        burgers = list(db.hamburger.find({'brand' : target}, {'_id': False}).sort('like', -1))
+        burgers = list(db.hamburger.find({'brand': target}, {'_id': False}).sort('like', -1))
     else:
-        burgers = list(db.hamburger.find({},{'_id':False}).sort('like', -1))
-    return jsonify({'result':'success', 'all_burgers': burgers})
+        burgers = list(db.hamburger.find({}, {'_id': False}).sort('like', -1))
+    return jsonify({'result': 'success', 'all_burgers': burgers})
 
-#리뷰 불러오기
+
+# 리뷰 불러오기
 @app.route('/get_comment', methods=['GET'])
 def comment_list():
     burgerid = request.args.get('burgerComment')
     print(burgerid)
-    comment = list(db.review.find({'burger_id': burgerid} , {'_id':False}))
+    comment = list(db.review.find({'burger_id': burgerid}, {'_id': False}))
 
     return jsonify({'result': 'success', 'commentList': comment})
+
 
 # 리뷰작성
 @app.route('/comment', methods=['POST'])
@@ -104,29 +109,21 @@ def burgers_review():
         doc = {
             'comment_id': commentid,
             'burger_id': burgerId,
-            'username' : username,
+            'username': username,
             'comment': comment_receive,
         }
         db.review.insert_one(doc)
-        return jsonify({'result':'success'})
+        return jsonify({'result': 'success'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-
-# 리뷰 수정
-@app.route('/comment_edit', methods=['POST'])
-def review_edit():
-    username_receive = request.form['username_give']
-    comment_receive = request.form['comment_give']
-    db.review.update_one({'name':username_receive}, {'$set':{'comment':comment_receive}})
-    return jsonify({'result': 'success'})
 
 # 리뷰 삭제
 @app.route('/comment_delete', methods=['POST'])
 def review_delete():
     print("삭제")
     comment_receive = request.form['comment_give']
-    db.review.delete_one({"comment_id":comment_receive})
+    db.review.delete_one({"comment_id": comment_receive})
 
     return jsonify({'result': 'success'})
 
@@ -135,11 +132,11 @@ def review_delete():
 @app.route('/like', methods=['POST'])
 def burgers_like():
     name_receive = request.form['name_give']
-    like = db.hamburger.find_one({'name':name_receive})
-    new_like = like['like']+1
+    like = db.hamburger.find_one({'name': name_receive})
+    new_like = like['like'] + 1
 
-    db.hamburger.update_one({'name':name_receive}, {'$set':{'like': new_like}})
-    return jsonify({'result':'success'})
+    db.hamburger.update_one({'name': name_receive}, {'$set': {'like': new_like}})
+    return jsonify({'result': 'success'})
 
 
 if __name__ == '__main__':

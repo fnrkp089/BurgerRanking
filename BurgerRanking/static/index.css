@@ -5,11 +5,15 @@
     border: 0;
     margin: 0;
 }
+
 a {
     text-decoration: none;
     color: black;
 }
-li {list-style: none;}
+
+li {
+    list-style: none;
+}
 
 body {
 }
@@ -20,15 +24,16 @@ button {
     cursor: pointer;
 }
 
-.clearfix::after{
+.clearfix::after {
     content: "";
     display: block;
     clear: both;
 }
+
 /*--------------------------------------*/
 
 /* header */
-.title{
+.title {
     display: block;
     padding: 32px 0;
     margin-left: 30%;
@@ -37,7 +42,7 @@ button {
     text-align: center;
 }
 
-.headerbox{
+.headerbox {
     display: flex;
     justify-content: space-around;
 
@@ -50,152 +55,217 @@ nav {
     text-align: center;
 }
 
-.nav_menu{
+.nav_menu {
     display: inline-block;
 }
-.nav_menu .on{
+
+.nav_menu .on {
     background-color: #888888;
     color: #ffffff;
 }
 
-.nav_btn{
-    border: 2px solid #888888;
+.nav_btn {
+    border: 1px solid;
     padding: 10px 20px;
     margin: 0 10px;
     font-size: 16px;
 }
 
-.logoutbox{
-    margin-top:20px;
+.nav_btn:hover {
+    color: #fff;
+}
+
+.hover1:hover {
+    box-shadow: 200px 0 0 0 rgba(240, 178, 10, 0.5) inset;
+}
+
+
+.logoutbox {
+    margin-top: 20px;
 }
 
 .logout {
     border: 1px solid #888888;
     padding: 20px;
     border-radius: 10px;
+    background-color: #EDB118;
 }
 
+.logout:hover {
+    color: #fff;
+}
+
+.hover2:hover {
+    box-shadow: -200px 0 0 0 rgba(0, 0, 0, 0.5) inset;
+}
 
 /* main */
 
-.burgers{
+.burgers {
     max-width: 1024px;
     margin: 0 auto;
 }
 
-.burger_wrap{
+.burger_wrap {
     display: grid;
     grid-template-columns: 2fr 10fr 3fr;
     margin: 60px 0;
 }
-.burger_rank{
+
+.burger_rank {
     font-size: 28px;
     text-align: center;
 }
+
 .burger_rank i {
     border-bottom: 2px solid #888888;
 }
 
-.burger_img{
+.burger_img {
     box-sizing: border-box;
     width: 35%;
     float: left;
 }
-.burger_img img{
+
+.burger_img img {
     width: 100%;
 }
-.sub_wrap{
+
+.sub_wrap {
     box-sizing: border-box;
     padding: 16px;
     width: 65%;
     float: left;
 }
-.burger_brand, .burger_name, .burger_sub{
+
+.burger_brand, .burger_name, .burger_sub {
     margin: 10px 0;
 }
-.review_write{
+
+.review_write {
     text-align: center;
     width: 100%;
     float: left;
 }
-.review_btn{
+
+.review_btn {
     padding: 10px 20px;
     margin: 10px 0;
-    background-color: #666666;
+    background-color: #11eaea;
     color: #ffffff;
 }
-.review_wrap{
+
+.review_btn:hover {
+    color: #fff;
+}
+
+.hover4:hover {
+    box-shadow: 200px 0 0 0 rgba(18, 42, 220, 0.25) inset, -200px 0 0 0 rgba(4, 35, 243, 0.25) inset;
+}
+
+
+.review_wrap {
     display: none;
     text-align: left;
     padding: 20px;
 }
-.review{
+
+.review {
     font-size: 16px;
     font-weight: bold;
 }
 
-.review_list_wrap{
+.review_list_wrap {
     padding: 10px 20px;
 }
-.review_list{
+
+.review_list {
     line-height: 1.7;
     padding: 8px 0;
     word-break: break-all;
     list-style: disc;
 }
-.review_edit{
+
+.review_edit {
     display: none;
     width: 100%;
     border: 1px solid #bdbdbd;
     padding: 4px;
     margin-top: 20px;
 }
-.review_user{
+
+.review_user {
     font-size: 12px;
     color: #666666;
 }
-.btn_wrap{
+
+.btn_wrap {
     float: right;
 }
 
-.review_edit_btn, .review_delete_btn{
-    color: #888888;
-    margin: 2px;
-}
-.edit_btn_wrap{
-    display: none;
-}
-.edit_complete_btn, .edit_cancel_btn{
+.review_delete_btn {
     color: #888888;
     margin: 2px;
 }
 
-.review_text{
+.review_delete_btn:hover {
+    color: #fff;
+}
+
+.hover5:hover {
+    box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.5) inset;
+}
+
+
+.edit_btn_wrap {
+    display: none;
+}
+
+.edit_complete_btn, .edit_cancel_btn {
+    color: #888888;
+    margin: 2px;
+}
+
+.review_text {
     width: 95%;
     border: 1px solid #444444;
     border-radius: 10px;
     padding: 10px;
 }
-.review_complete{
+
+.review_complete {
     padding: 10px 20px;
     margin: 20px 0;
     background-color: #666666;
     color: #ffffff;
 }
+.review_complete:hover{color:#fff;}
 
-.like_wrap{
+.hover7:hover{ box-shadow:200px 0 0 0 rgba(48, 238, 5, 0.5) inset; }
+
+.like_wrap {
     text-align: center;
 }
-.like, .dislike{
+
+.like {
     display: inline-block;
     font-size: 14px;
     border: 1px solid #888888;
     border-radius: 10px;
     padding: 10px 20px;
     margin-top: 20px;
+    background-color: deeppink;
 }
 
-.comment{
+.like:hover {
+    color: #fff;
+}
+
+.hover3:hover {
+    box-shadow: 0 80px 0 0 rgba(236, 17, 17, 0.25) inset, 0 -80px 0 0 rgba(243, 6, 6, 0.95) inset;
+}
+
+.comment {
     color: red;
     font-size: 13px;
 }
