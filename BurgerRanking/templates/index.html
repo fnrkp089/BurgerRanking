@@ -111,7 +111,7 @@
                             let commentList = response['commentList']
                             console.log(commentList);
                             for (let i = 0; i < commentList.length; i++) {
-                                let commentid = commentList[i].comment_id
+                                let commentid = commentList[i]._id
                                 let burgerid = commentList[i].burger_id
                                 let comment = commentList[i].comment
                                 let username = commentList[i].username
@@ -152,7 +152,7 @@
             function comment(Num, BurgerId) {
                 let burgerId = BurgerId;
                 let review = $('#review_comment' + Num).val();
-                let today = new Date().toISOString()
+
                 if (review == "") {
                     $("#comment-id" + Num).text("리뷰를 입력해주세요").addClass("comment");
                     $("#review_comment" + Num).focus();
@@ -161,7 +161,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '/comment',
-                    data: {comment_id: today, comment_give: review, burgerId: burgerId, username: user_info},
+                    data: {comment_give: review, burgerId: burgerId, username: user_info},
                     success: function (response) {
                         if (response['result'] == 'success') {
                             alert('리뷰작성 완료');

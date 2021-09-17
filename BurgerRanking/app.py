@@ -4,6 +4,7 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from datetime import datetime, timedelta
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -92,10 +93,10 @@ def burgers_list():
 @app.route('/get_comment', methods=['GET'])
 def comment_list():
     burgerid = request.args.get('burgerComment')
-    print(burgerid)
-    comment = list(db.review.find({'burger_id': burgerid}, {'_id': False}))
-
-    return jsonify({'result': 'success', 'commentList': comment})
+    comments = list(db.review.find({'burger_id': burgerid}))
+    for comment in comments:
+        comment["_id"] = str(comment["_id"])
+    return jsonify({'result': 'success', 'commentList': comments})
 
 
 # 리뷰작성
@@ -105,9 +106,7 @@ def burgers_review():
         comment_receive = request.form['comment_give']
         burgerId = request.form['burgerId']
         username = request.form['username']
-        commentid = request.form['comment_id']
         doc = {
-            'comment_id': commentid,
             'burger_id': burgerId,
             'username': username,
             'comment': comment_receive,
@@ -121,10 +120,8 @@ def burgers_review():
 # 리뷰 삭제
 @app.route('/comment_delete', methods=['POST'])
 def review_delete():
-    print("삭제")
     comment_receive = request.form['comment_give']
-    db.review.delete_one({"comment_id": comment_receive})
-
+    db.review.delete_one({'_id': ObjectId(comment_receive)})
     return jsonify({'result': 'success'})
 
 
