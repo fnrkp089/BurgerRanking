@@ -67,5 +67,5 @@
   ***버튼클릭, 리뷰작성 모습(33fps라 화질이 깨짐)***  
  
   ## 관련 링크
-  https://youtu.be/XI3LMycx6Sc
+  https://youtu.be/Z0_9t-phu5E
   
