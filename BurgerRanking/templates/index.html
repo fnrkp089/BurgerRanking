@@ -62,6 +62,26 @@
         });
 
         function showBurgers(string) {
+
+            if ('McDonald' == string) {
+                $('#McDonald').addClass('buttoncolor')
+                $('#BURGERKING').removeClass('buttoncolor')
+                $('#LOTTERIA').removeClass('buttoncolor')
+                $('#ALL').removeClass('buttoncolor')
+
+            }
+            if ('BURGERKING' == string) {
+                $('#BURGERKING').addClass('buttoncolor')
+                $('#McDonald').removeClass('buttoncolor')
+                $('#LOTTERIA').removeClass('buttoncolor')
+                $('#ALL').removeClass('buttoncolor')
+            }
+            if ('LOTTERIA' == string) {
+                $('#LOTTERIA').addClass('buttoncolor')
+                $('#McDonald').removeClass('buttoncolor')
+                $('#BURGERKING').removeClass('buttoncolor')
+                $('#ALL').removeClass('buttoncolor')
+            }
             if (String !== undefined)
                 brandName = string
             $('#burgers_box').empty();
@@ -263,16 +283,16 @@
 <nav class="clearfix">
     <ol>
         <li class="nav_menu">
-            <button class="nav_btn hover1" onclick="window.location.reload()">ALL</button>
+            <button class="nav_btn hover1 buttoncolor" id="ALL" onclick="window.location.reload()">ALL</button>
         </li>
         <li class="nav_menu">
-            <button class="nav_btn hover1" onclick="showBurgers('McDonald')">McDonald</button>
+            <button class="nav_btn hover1" id="McDonald" onclick="showBurgers('McDonald')">McDonald</button>
         </li>
         <li class="nav_menu">
-            <button class="nav_btn hover1" onclick="showBurgers('BURGER KING')">BURGER KING</button>
+            <button class="nav_btn hover1" id="BURGERKING" onclick="showBurgers('BURGERKING')">BURGER KING</button>
         </li>
         <li class="nav_menu">
-            <button class="nav_btn hover1" onclick="showBurgers('LOTTERIA')">LOTTERIA</button>
+            <button class="nav_btn hover1" id="LOTTERIA" onclick="showBurgers('LOTTERIA')">LOTTERIA</button>
         </li>
     </ol>
     <div class="logoutbox">

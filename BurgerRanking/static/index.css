@@ -292,3 +292,9 @@ nav ol{
     color: red;
     font-size: 13px;
 }
+
+.buttoncolor{
+    background-color:#EDB118;
+    color:white;
+    border-color:#EDB118;
+}
