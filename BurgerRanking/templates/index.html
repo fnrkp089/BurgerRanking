@@ -48,58 +48,61 @@
             } else {
                 $('#review_box' + num).show();
                 $('#review_btn_box' + num).text('리뷰 닫기');
-
                 getComment(burgerId);
             }
         }
 
         // API
+        //버거의 종류를 담아줄 전역변수와, 사용자의 이름을 담아줄 전역변수를 하나씩 생성.
         let brandName;
         let user_info = '{{user_info}}'
 
         $(document).ready(function () {
+            //로드 된 후, showBurgers로 모든 버거 조회.
             showBurgers(brandName);
         });
 
         function showBurgers(string) {
-
+            //버거의 종류에 따라 해당하는 브랜드의 버거만 조회.
             if ('McDonald' == string) {
-                $('#McDonald').addClass('buttoncolor')
-                $('#BURGERKING').removeClass('buttoncolor')
+                $('#McDonald').addClass('buttoncolor')  //맥도날드 버튼색을 변경
+                $('#BURGERKING').removeClass('buttoncolor')  //그외 다른 버튼 색 제거
                 $('#LOTTERIA').removeClass('buttoncolor')
                 $('#ALL').removeClass('buttoncolor')
 
             }
             if ('BURGER KING' == string) {
-                $('#BURGERKING').addClass('buttoncolor')
-                $('#McDonald').removeClass('buttoncolor')
+                $('#BURGERKING').addClass('buttoncolor')  //버거킹의 버튼색을 변경
+                $('#McDonald').removeClass('buttoncolor')  //그외 다른 버튼 색 제거
                 $('#LOTTERIA').removeClass('buttoncolor')
                 $('#ALL').removeClass('buttoncolor')
             }
             if ('LOTTERIA' == string) {
-                $('#LOTTERIA').addClass('buttoncolor')
-                $('#McDonald').removeClass('buttoncolor')
+                $('#LOTTERIA').addClass('buttoncolor')  //롯데리아 버튼색을 변경
+                $('#McDonald').removeClass('buttoncolor')  //그외 다른 버튼 색 제거
                 $('#BURGERKING').removeClass('buttoncolor')
                 $('#ALL').removeClass('buttoncolor')
             }
             if (String !== undefined)
                 brandName = string
+            //새로 화면을 리로드 하는것 보다 해당 html을 새로 그려줌
             $('#burgers_box').empty();
             $.ajax({
                 type: 'GET',
                 url: '/mainpage',
                 data: {type: string},
+                //성공할 경우 하나씩 append 시켜 화면을 그려준다.
                 success: function (response) {
                     if (response['result'] == 'success') {
                         let burgers = response['all_burgers']
                         for (let i = 0; i < burgers.length; i++) {
-                            let num = i + 1;
-                            let brand = burgers[i].brand;
-                            let name = burgers[i].name;
-                            let img = burgers[i].img_url;
-                            let status = burgers[i].status;
-                            let like = burgers[i].like;
-                            let burgerId = burgers[i].burger_id;
+                            let num = i + 1;  //현재 배열의 인덱스
+                            let brand = burgers[i].brand;  //버거의 브랜드
+                            let name = burgers[i].name;  //버거의 이름
+                            let img = burgers[i].img_url;  //버거의 이미지 주소
+                            let status = burgers[i].status;  //버거의 설명
+                            let like = burgers[i].like;  //버거의 좋아요 수
+                            let burgerId = burgers[i].burger_id;  //버거의 고유 아이디
                             let temp_html = `<div class="burger_wrap" id="burger_box">
                                                         <div class="burger_rank"><i>${num}</i></div>
                                                         <div class="burger_desc clearfix">
@@ -141,13 +144,14 @@
             });
         }
 
-        //아이디 마스킹
+        //아이디 마스킹 함수
         function maskingUser(user) {
+            //정규 표현식으로 끝 4자리 문자열을 *으로 치환
             let masked = user.replace(/(?<=.{4})./gi, "*");
             return masked
         }
 
-        //리뷰 불러오기
+        //리뷰 불러오기, 해당 버거의 아이디로 조회
         function getComment(number) {
             $.ajax({
                 type: 'GET',
@@ -158,13 +162,13 @@
                         let commentList = response['commentList']
 
                         for (let i = 0; i < commentList.length; i++) {
-                            let commentid = commentList[i]._id
-                            let burgerid = commentList[i].burger_id
-                            let comment = commentList[i].comment
-                            let username = commentList[i].username
-                            let username2 = commentList[i].username
+                            let commentid = commentList[i]._id  //코멘트의 기본 아이디
+                            let burgerid = commentList[i].burger_id  //버거의 고유 아이디
+                            let comment = commentList[i].comment  //코멘트값
+                            let username = commentList[i].username  //유저의 기본 아이디
+                            let username2 = commentList[i].username  // 마스킹 처리가 끝난 유저 아이디.
                             if (username2 !== undefined) {
-                                username = maskingUser(username2)
+                                username = maskingUser(username2)  //코멘트한 유저의 아이디 끝 4자리를 마스킹 처리하는 함수 실행
                             }
                             if (username2 == '{{user_info}}') {
                                 let temp_html = ` <li class="review_list">
@@ -183,7 +187,7 @@
                                                             </div>
                                                         </div>
                                                     </li>`
-                                $('#review_list_box' + burgerid).append(temp_html)
+                                $('#review_list_box' + burgerid).append(temp_html) //현재 사용자가 입력한 리뷰일 경우에만 삭제 버튼 보여짐
                             } else {
                                 let temp_html = ` <li class="review_list">
                                                         <div class="review_div clearfix">
@@ -198,7 +202,7 @@
                                                             </div>
                                                         </div>
                                                     </li>`
-                                $('#review_list_box' + burgerid).append(temp_html);
+                                $('#review_list_box' + burgerid).append(temp_html); //현재 사용자가 입력한 리뷰가 아닐경우 삭제버튼을 보여주지않음
                             }
 
 
@@ -210,22 +214,23 @@
 
         // 리뷰 작성
         function comment(Num, BurgerId) {
-            let burgerId = BurgerId;
-            let review = $('#review_comment' + Num).val();
+            let burgerId = BurgerId;  //버거의 고유아이디
+            let review = $('#review_comment' + Num).val(); //작성된 리뷰의 값
 
+            //만약 리뷰를 작성하지 않고 작성 버튼을 눌렀을 경우
             if (review == "") {
-                $("#comment-id" + Num).text("리뷰를 입력해주세요").addClass("comment");
+                $("#comment-id" + Num).text("리뷰를 입력해주세요").addClass("comment");  //Validation 체크
                 $("#review_comment" + Num).focus();
                 return;
             }
             $.ajax({
                 type: 'POST',
                 url: '/comment',
-                data: {comment_give: review, burgerId: burgerId, username: user_info},
+                data: {comment_give: review, burgerId: burgerId, username: user_info},  //리뷰값, 버거의 고유아이디, 유저아이디를 넘겨줌
                 success: function (response) {
                     if (response['result'] == 'success') {
                         alert('리뷰작성 완료');
-                        showBurgers(brandName);
+                        showBurgers(brandName);  // 사용자가 누른 브랜드의 버거를 다시 조회함
                     }
                 }
             });
@@ -238,11 +243,11 @@
             $.ajax({
                 type: 'POST',
                 url: '/comment_delete',
-                data: {comment_give: commentid},
+                data: {comment_give: commentid},  //코멘트의 고유 아이디값으로 조회
                 success: function (response) {
                     if (response['result'] == 'success') {
                         alert('리뷰를 삭제했습니다.')
-                        showBurgers(brandName);
+                        showBurgers(brandName);  // 사용자가 누른 브랜드의 버거를 다시 조회함
                     }
                 }
             });
@@ -253,11 +258,11 @@
             $.ajax({
                 type: 'POST',
                 url: '/like',
-                data: {'name_give': name},
+                data: {'name_give': name},  //버거의 이름
                 success: function (response) {
                     if (response['result'] == 'success') {
                         alert('좋아요 완료');
-                        showBurgers(brandName);
+                        showBurgers(brandName);  // 사용자가 누른 브랜드의 버거를 다시 조회함
                     }
                 }
             });
@@ -265,7 +270,7 @@
 
 
         function sign_out() {
-            $.removeCookie('mytoken', {path: '/'});
+            $.removeCookie('mytoken', {path: '/'});  //로그아웃시 사용자의 쿠키를 제거 후, 로그인 화면으로 전환
             alert('로그아웃!')
             window.location.href = "/login"
         }

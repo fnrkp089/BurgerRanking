@@ -29,12 +29,12 @@
             //     alert("{{ msg }}")
             // {% endif %}
 
-        function sign_in() {
+        function sign_in() {  //로그인 함수
             let username = $("#input-username").val()
             let password = $("#input-password").val()
 
             if (username == "") {
-                $("#help-id-login").text("아이디를 입력해주세요.")
+                $("#help-id-login").text("아이디를 입력해주세요.")  //아이디를 입력하지 않았을 경우 안내 메세지 출력
                 $("#input-username").focus()
                 return;
             } else {
@@ -42,7 +42,7 @@
             }
 
             if (password == "") {
-                $("#help-password-login").text("비밀번호를 입력해주세요.")
+                $("#help-password-login").text("비밀번호를 입력해주세요.")  //비밀번호를 입력하지 않았을 경우 안내 메세지 출력
                 $("#input-password").focus()
                 return;
             } else {
@@ -52,12 +52,12 @@
                 type: "POST",
                 url: "/sign_in",
                 data: {
-                    username_give: username,
-                    password_give: password
+                    username_give: username,  //입력한 유저의 아이디
+                    password_give: password  //입력한 유저의 비밀번호
                 },
                 success: function (response) {
                     if (response['result'] == 'success') {
-                        $.cookie('mytoken', response['token'], {path: '/'});
+                        $.cookie('mytoken', response['token'], {path: '/'});  //쿠키로 부터 토큰값을 가져옴
                         window.location.replace("/")
                     } else {
                         alert(response['msg'])
@@ -66,11 +66,11 @@
             });
         }
 
-        function sign_up() {
-            let username = $("#input-username").val()
-            let password = $("#input-password").val()
-            let password2 = $("#input-password2").val()
-            let name = $("#input-name").val()
+        function sign_up() {  //회원가입 함수
+            let username = $("#input-username").val()  //유저의 아이디
+            let password = $("#input-password").val()  //유저의 비밀번호
+            let password2 = $("#input-password2").val()  //유저의 비밀번호 확인
+            let name = $("#input-name").val()  //유저의 이름
 
             if (password == "") {
                 $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
@@ -99,9 +99,9 @@
                 type: "POST",
                 url: "/sign_up/save",
                 data: {
-                    username_give: username,
-                    password_give: password,
-                    name_give: name
+                    username_give: username,  //유저가 입력한 아이디
+                    password_give: password,  //유저가 입력한 비밀번호
+                    name_give: name  //유저가 입력한 이름
                 },
                 success: function (response) {
                     alert("회원가입을 축하드립니다!")
@@ -112,7 +112,7 @@
         }
 
 
-        function toggle_sign_up() {
+        function toggle_sign_up() {  //회원가입을 누를 경우 화면 전환 함수
             $("#sign-up-box").toggleClass("is-hidden")
             $("#div-sign-in-or-up").toggleClass("is-hidden")
             $("#btn-check-dup").toggleClass("is-hidden")
@@ -122,12 +122,12 @@
         }
 
         function is_nickname(asValue) {
-            var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
+            var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;  //정규 표현식으로 아이디 Validation
             return regExp.test(asValue);
         }
 
         function is_password(asValue) {
-            var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
+            var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;  //정규 표현식으로 비밀번호 Validation
             return regExp.test(asValue);
         }
 
